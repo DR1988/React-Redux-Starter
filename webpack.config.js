@@ -1,26 +1,23 @@
-import webpack from 'webpack' 
+import webpack from 'webpack'
 import path from 'path'
 
+// import ExtractTextPlugin from 'extract-text-webpack-plugin'
 // const webpack = require('webpack')
-// import  ExtractTextPlugin from 'extract-text-webpack-plugin'
 // import CleanWebpackPlugin from 'clean-webpack-plugin'
 export const dist = path.join(__dirname, 'dist')
 
-console.log(process.env.NODE_ENV)
-
 export default (env) => {
-
-  const dev = o => { return env.dev ? o : null}
+  const dev = o => (env.dev ? o : null)
 
   return {
     resolve: {
       modulesDirectories: ['node_modules'],
-      extensions: ['', '.js', '.jsx']
+      extensions: ['', '.js', '.jsx'],
     },
     entry: [
       'babel-polyfill',
-      dev('webpack-hot-middleware/client'),
       'react-hot-loader/patch',
+      dev('webpack-hot-middleware/client'),
       path.join(__dirname, 'app/index.js')],
     output: {
       path: dist,
@@ -30,20 +27,31 @@ export default (env) => {
     watch: env.dev,
     devtool: env.dev ? 'eval' : null,
     module: {
+      preLoaders: [{
+        test: /\.jsx$/,
+        loaders: ['eslint-loader'],
+        include: [
+          path.resolve(__dirname),
+        ],
+      }],
       loaders: [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           loaders: ['babel'],
           include: path.join(__dirname),
-        }
-      ]
+        },
+        {
+          test: /\.scss$/,
+          loader: 'style!css!autoprefixer?browser=last 2 versions!sass',
+        },
+      ],
     },
     plugins: [
-    // OccurenceOrderPlugin is needed for webpack 1.x only 
+    // OccurenceOrderPlugin is needed for webpack 1.x only
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
-    ]
+      new webpack.NoErrorsPlugin(),
+    ],
   }
 }
