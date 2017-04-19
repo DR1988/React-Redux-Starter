@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './app.scss'
+import s from './style.scss'
 
 class App extends Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class App extends Component {
       <div className="App">
         <h1>Hello World!</h1>
         <div>
-          <p>Введите Ваше имя:</p>
+          <p className={s.green}>Введите Ваше имя:</p>
           <div><input onChange={this.handleNameChange} /></div>
           {this.renderGreetingWidget()}
         </div>

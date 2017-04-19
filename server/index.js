@@ -15,5 +15,5 @@ app.use(webpackMidlleware)
 app.use(express.static(path.resolve(__dirname, './../')))
 app.listen(port, host, (err) => {
   if (err) console.error(err)
-  console.info(`SERVER: Listening at ${host}:${port}`)
+  console.info(`SERVER: Listening at ${host}:${port}`) // eslint-disable-line no-console
 })

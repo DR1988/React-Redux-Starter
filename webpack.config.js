@@ -1,8 +1,8 @@
 import webpack from 'webpack'
 import path from 'path'
+import autoprefixer from 'autoprefixer'
 
 // import ExtractTextPlugin from 'extract-text-webpack-plugin'
-// const webpack = require('webpack')
 // import CleanWebpackPlugin from 'clean-webpack-plugin'
 export const dist = path.join(__dirname, 'dist')
 
@@ -24,11 +24,10 @@ export default (env) => {
       filename: 'build.js',
       publicPath: '/',
     },
-    watch: env.dev,
     devtool: env.dev ? 'eval' : null,
     module: {
       preLoaders: [{
-        test: /\.jsx$/,
+        test: /\.jsx?$/,
         loaders: ['eslint-loader'],
         include: [
           path.resolve(__dirname),
@@ -36,17 +35,22 @@ export default (env) => {
       }],
       loaders: [
         {
+          test: /\.s?css$/,
+          loader: `style-loader!css-loader?modules&importLoaders=1&localIdentName=${
+            env.dev ? '[name]__[local]' : '[hash:base64:5]'
+          }&sourceMap=${!!env.dev}!sass`,
+        }, {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           loaders: ['babel'],
-          include: path.join(__dirname),
-        },
-        {
-          test: /\.scss$/,
-          loader: 'style!css!autoprefixer?browser=last 2 versions!sass',
-        },
-      ],
+          include: path.join(__dirname, 'app'),
+        }],
     },
+    postcss: () => [
+      autoprefixer({
+        browsers: ['last 2 versions'],
+      }),
+    ],
     plugins: [
     // OccurenceOrderPlugin is needed for webpack 1.x only
       new webpack.optimize.OccurenceOrderPlugin(),

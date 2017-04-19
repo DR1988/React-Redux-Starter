@@ -22,7 +22,7 @@ const renderHTML = componentHTML => `
 `
 
 router.get('*', (req, res) => {
-  const mainChunk = res.locals.webpackStats.toJson().assetsByChunkName.main
+  // const mainChunk = res.locals.webpackStats.toJson().assetsByChunkName.main
   const componentHTML = renderToStaticMarkup(<App />)
 
   return res.end(renderHTML(componentHTML))
