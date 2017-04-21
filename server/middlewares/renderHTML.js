@@ -1,12 +1,14 @@
 import express from 'express'
 import React from 'react'
+import { Provider } from 'react-redux'
 import { renderToStaticMarkup } from 'react-dom/server'
 import App from './../../app/components/App/App'
+import { purgeCache } from './../utils/index'
 
 const router = express.Router()
 const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : '/'
 
-const renderHTML = componentHTML => `
+const renderHTML = (componentHTML, initialState) => `
 <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -17,15 +19,38 @@ const renderHTML = componentHTML => `
   <body>
     <div id="root">${componentHTML}</div>
     <script type="application/javascript" src="${assetUrl}/build.js"></script>
+    <script>
+      window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
   </body>
 </html>
 `
 
-router.get('*', (req, res) => {
-  // const mainChunk = res.locals.webpackStats.toJson().assetsByChunkName.main
-  const componentHTML = renderToStaticMarkup(<App />)
 
-  return res.end(renderHTML(componentHTML))
+router.get('*', (req, res) => {
+  if (process.env.NODE_ENV === 'development') {
+    [
+      '../../app/redux/confStore',
+    ].forEach(purgeCache)
+  }
+  /* eslint-disable global-require */
+  const configureStore = require('../../app/redux/confStore').default
+  // const rootSaga = require('../../app/sagas/rootSaga').default
+  // const routes = require('../../app/routes').default
+  // const Html = require('../../app/components/Html').default
+  /* eslint-enable global-require */
+  // const mainChunk = res.locals.webpackStats.toJson().assetsByChunkName.main
+
+  const store = configureStore()
+  // store.runSaga(rootSaga)
+  const state = store.getState()
+
+  const componentHTML = renderToStaticMarkup(
+    <Provider store={store} >
+      <App />
+    </Provider>,
+  )
+
+  return res.end(renderHTML(componentHTML, state))
 })
 
 export default router

@@ -16,7 +16,6 @@ export default (env) => {
     },
     entry: [
       'babel-polyfill',
-      'react-hot-loader/patch',
       dev('webpack-hot-middleware/client'),
       path.join(__dirname, 'app/index.js')],
     output: {
@@ -26,13 +25,13 @@ export default (env) => {
     },
     devtool: env.dev ? 'eval' : null,
     module: {
-      preLoaders: [{
-        test: /\.jsx?$/,
-        loaders: ['eslint-loader'],
-        include: [
-          path.resolve(__dirname),
-        ],
-      }],
+      // preLoaders: [{
+      //   test: /\.jsx?$/,
+      //   loaders: ['eslint-loader'],
+      //   include: [
+      //     path.resolve(__dirname),
+      //   ],
+      // }],
       loaders: [
         {
           test: /\.s?css$/,

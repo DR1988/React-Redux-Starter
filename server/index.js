@@ -10,8 +10,8 @@ const host = process.env.host ? process.env.host : 'localhost'
 
 app.use(webpackMidlleware)
 app.use(renderMiddleware)
-
 app.use(webpackMidlleware)
+
 app.use(express.static(path.resolve(__dirname, './../')))
 app.listen(port, host, (err) => {
   if (err) console.error(err)
