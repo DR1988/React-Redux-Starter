@@ -1,12 +1,12 @@
 import { delay, takeLatest } from 'redux-saga'
 import { call, put } from 'redux-saga/effects'
-// import { actions, types } from '../redux/counter'
+import { actions, types } from '../redux/counter'
 
-export function* incrementAsync() {
+export function* incrementAsync(action) {
   yield call(delay, 1000, null)
-  // yield put(actions.increment(action.payload))
+  yield put(actions.increment(action.payload))
 }
 
-export function* incrementAsyncSaga() { // eslint-disable-line
-  yield* takeLatest()
+export function* incrementAsyncSaga() {
+  yield* takeLatest(types.INCREMENT_ASYNC, incrementAsync)
 }

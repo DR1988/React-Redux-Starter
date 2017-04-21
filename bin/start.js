@@ -3,7 +3,7 @@ import cssHook from 'css-modules-require-hook'
 
 const dev = process.env.NODE_ENV === 'development'
 
-console.log('devdev', dev)
+// console.log('devdev', dev)
 
 const cssHookConfig = {
   generateScopedName: dev ? '[name]__[local]' : '[hash:base64:5]',
@@ -12,7 +12,7 @@ const cssHookConfig = {
 
 cssHook(cssHookConfig)
 
-console.log(process.env.NODE_ENV)
+// console.log(process.env.NODE_ENV)
 
 require('./../server/index.js')  // eslint-disable-line global-require
 

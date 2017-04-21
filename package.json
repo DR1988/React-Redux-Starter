@@ -7,7 +7,9 @@
     "dev": "cross-env NODE_ENV=development babel-node ./bin/start.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js,.jsx",
-    "fix": "eslint . --ext .js,.jsx --fix"
+    "fix": "eslint . --ext .js,.jsx --fix",
+    "create-component": "babel-node bin/generators/component",
+    "create-container": "babel-node bin/generators/container"
   },
   "author": "",
   "license": "ISC",
