@@ -6,7 +6,7 @@ const Main = (props) => {
   // console.log('props', props)
   return (
     <div className={s.root}>
-      <h1>Hello!</h1>
+      <h1 className={s.green}>Hello!</h1>
       <p>Counts: {props.counter.value} </p>
       <button onClick={props.incrementByOne} >+</button>
       <button onClick={props.incrementByOneAync}>+Async</button>
