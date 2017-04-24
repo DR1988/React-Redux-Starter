@@ -32,7 +32,7 @@ export default (env) => {
             'style-loader',
             `css-loader?modules&importLoaders=1&localIdentName=${
               env.dev ? '[name]__[local]' : '[hash:base64:5]'
-            }&sourceMap=${!!env.dev}`,
+            }&sourceMap=${!!env.dev}&context=/`,
             'sass-loader',
           ],
         }, {
