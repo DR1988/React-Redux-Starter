@@ -2,11 +2,12 @@ import express from 'express'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { StaticRouter as Router, matchPath } from 'react-router'
 import App from './../../app/components/App/App'
 import { purgeCache } from './../utils/index'
 
 const router = express.Router()
-const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : '/'
+// const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : '/'
 
 const renderHTML = (componentHTML, initialState) => `
   <!DOCTYPE html>
@@ -21,7 +22,7 @@ const renderHTML = (componentHTML, initialState) => `
       <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')}
         </script>
-      <script type="application/javascript" src="${assetUrl}/build.js"></script>
+      <script type="application/javascript" src="/build.js"></script>
     </body>
   </html>
   `
@@ -45,10 +46,17 @@ router.get('*', (req, res) => {
   const store = configureStore()
   store.runSaga(rootSaga)
   const state = store.getState()
+  const context = {}
+
   const componentHTML = renderToStaticMarkup(
-    <Provider store={store} >
-      <App store={store} />
-    </Provider>,
+    <Router
+      location={req.url}
+      context={context}
+    >
+      <Provider store={store} >
+        <App store={store} />
+      </Provider>
+    </Router>,
   )
 
   return res.end(renderHTML(componentHTML, state))

@@ -11,8 +11,8 @@ export default (env) => {
 
   return {
     resolve: {
-      modulesDirectories: ['node_modules'],
-      extensions: ['', '.js', '.jsx'],
+      modules: ['node_modules'],
+      extensions: ['.js', '.jsx'],
     },
     entry: [
       'babel-polyfill',
@@ -25,36 +25,36 @@ export default (env) => {
     },
     devtool: env.dev ? 'eval' : null,
     module: {
-      // preLoaders: [{
-      //   test: /\.jsx?$/,
-      //   loaders: ['eslint-loader'],
-      //   include: [
-      //     path.resolve(__dirname),
-      //   ],
-      // }],
-      loaders: [
+      rules: [
         {
           test: /\.s?css$/,
-          loader: `style-loader!css-loader?modules&importLoaders=1&localIdentName=${
-            env.dev ? '[name]__[local]' : '[hash:base64:5]'
-          }&sourceMap=${!!env.dev}!sass`,
+          use: [
+            'style-loader',
+            `css-loader?modules&importLoaders=1&localIdentName=${
+              env.dev ? '[name]__[local]' : '[hash:base64:5]'
+            }&sourceMap=${!!env.dev}`,
+            'sass-loader',
+          ],
         }, {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loaders: ['babel'],
+          loaders: ['babel-loader'],
           include: path.join(__dirname, 'app'),
         }],
     },
-    postcss: () => [
-      autoprefixer({
-        browsers: ['last 2 versions'],
-      }),
-    ],
     plugins: [
-    // OccurenceOrderPlugin is needed for webpack 1.x only
-      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          postcss() {
+            return [autoprefixer({
+              browsers: ['> 1%',
+                'last 3 version'],
+            })]
+          },
+        },
+      }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
     ],
   }
 }

@@ -10,9 +10,12 @@ const host = process.env.host ? process.env.host : 'localhost'
 
 app.use(webpackMidlleware)
 app.use(renderMiddleware)
-app.use(webpackMidlleware)
 
 app.use(express.static(path.resolve(__dirname, './../')))
+// app.get('*', (req, res) =>
+//      res.sendFile(path.resolve('index.html')),
+// )
+
 app.listen(port, host, (err) => {
   if (err) console.error(err)
   console.info(`SERVER: Listening at ${host}:${port}`) // eslint-disable-line no-console

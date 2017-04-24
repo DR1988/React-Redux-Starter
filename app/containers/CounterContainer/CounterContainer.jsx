@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { actions, selectCounter } from '../../redux/counter'
-import Main from './../../components/Main/Main'
+import { withRouter } from 'react-router'
 
-class MainContainer extends Component {
+import { actions, selectCounter } from '../../redux/counter'
+import Counter from './../../components/Counter/Counter'
+
+class CounterContainer extends Component {
   static propTypes = {
     counter: PropTypes.object,
     reset: PropTypes.func,
@@ -16,15 +18,12 @@ class MainContainer extends Component {
   incrementByOneAync = () => this.props.incrementAsync(1)
 
   render() {
-    // console.log(this.props)
-    return (
-      <Main
-        counter={this.props.counter}
-        incrementByOne={this.incrementByOne}
-        incrementByOneAync={this.incrementByOneAync}
-        reset={this.props.reset}
-      />
-    )
+    return <Counter
+      counter={this.props.counter}
+      incrementByOne={this.incrementByOne}
+      incrementByOneAync={this.incrementByOneAync}
+      reset={this.props.reset}
+    />
   }
 }
 
@@ -35,5 +34,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(MainContainer)
-
+export default withRouter(connect(mapStateToProps, actions)(CounterContainer))

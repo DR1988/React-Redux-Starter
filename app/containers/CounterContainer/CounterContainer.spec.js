@@ -1,7 +1,7 @@
 import React from 'react'
-import MainContainer from './'
+import CounterContainer from './'
 
-describe('MainContainer container', () => {
+describe('CounterContainer container', () => {
   const props = {
 
   }

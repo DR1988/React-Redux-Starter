@@ -1,25 +1,29 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { Route, Link } from 'react-router-dom'
 import s from './Main.scss'
+import Counter from './../../containers/CounterContainer'
 
-const Main = (props) => {
-  // console.log('props', props)
-  return (
-    <div className={s.root}>
-      <h1>Hello!</h1>
-      <p>Counts: {props.counter.value} </p>
-      <button onClick={props.incrementByOne} >+</button>
-      <button onClick={props.incrementByOneAync}>+Async</button>
-      <button onClick={props.reset}>Reset</button>
+const About = () => <div>
+  {/* {fetch('https://api.github.com/gists')
+    .then(r => r.json())
+    .then(gists => console.log(gists))
+  }*/}
+  About
+  </div>
+const Home = () => <div>
+  Home
+  </div>
+
+const Main = () =>
+  <div className={s.root}>
+    <div>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <Link to="/counter">Counter</Link>
     </div>
-  )
-}
-
-Main.propTypes = {
-  incrementByOne: PropTypes.func,
-  incrementByOneAync: PropTypes.func,
-  reset: PropTypes.func,
-  value: PropTypes.number,
-}
+    <Route exact path="/" component={Home} />
+    <Route path="/about" component={About} />
+    <Route path="/counter" component={Counter} />
+  </div>
 
 export default Main
