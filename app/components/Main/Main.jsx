@@ -16,9 +16,10 @@ const Home = () => <div>
 
 const Main = () =>
   <div className={s.root}>
+    <div className={`btn btn-default ${s.green}`}> asdasd</div>
     <div>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
+      <Link to="/" className={s.green}>Home</Link>
+      <Link to="/about" >About</Link>
       <Link to="/counter">Counter</Link>
     </div>
     <Route exact path="/" component={Home} />

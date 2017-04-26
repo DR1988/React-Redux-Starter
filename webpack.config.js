@@ -17,6 +17,7 @@ export default (env) => {
     entry: [
       'babel-polyfill',
       dev('webpack-hot-middleware/client'),
+      'bootstrap-loader',
       path.join(__dirname, 'app/index.js')],
     output: {
       path: dist,
@@ -40,7 +41,9 @@ export default (env) => {
           exclude: /node_modules/,
           loaders: ['babel-loader'],
           include: path.join(__dirname, 'app'),
-        }],
+        },
+        { test: /\.(woff2?|svg)$/, loader: 'url-loader?limit=10000' },
+        { test: /\.(ttf|eot)$/, loader: 'file-loader' }],
     },
     plugins: [
       new webpack.LoaderOptionsPlugin({

@@ -18,12 +18,12 @@ class CounterContainer extends Component {
   incrementByOneAync = () => this.props.incrementAsync(1)
 
   render() {
-    return <Counter
+    return (<Counter
       counter={this.props.counter}
       incrementByOne={this.incrementByOne}
       incrementByOneAync={this.incrementByOneAync}
       reset={this.props.reset}
-    />
+    />)
   }
 }
 
