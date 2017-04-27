@@ -34,7 +34,7 @@ router.get('*', (req, res) => {
       './../../app/saga/rootsaga',
     ].forEach(purgeCache)
   }
-  /* eslint-disable global-require */
+    /* eslint-disable global-require */
   const configureStore = require('./../../app/redux/confStore.js').default
   const rootSaga = require('./../../app/saga/rootsaga.js').default
 
@@ -53,9 +53,7 @@ router.get('*', (req, res) => {
       location={req.url}
       context={context}
     >
-      <Provider store={store} >
-        <App store={store} />
-      </Provider>
+      <App store={store} />
     </Router>,
   )
 

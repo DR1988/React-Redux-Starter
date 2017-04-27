@@ -6,6 +6,10 @@ const Counter = props => (
   <div className={s.root}>
     <h1>Hello!</h1>
     <p>Counts: {props.counter.value} </p>
+    <button
+      className={`btn btn-default ${s.white}`}
+      onClick={props.open}
+    > Click</button>
     <button onClick={props.incrementByOne} >+</button>
     <button onClick={props.incrementByOneAync}>+Async</button>
     <button onClick={props.reset}>Reset</button>
