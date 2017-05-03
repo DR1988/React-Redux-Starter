@@ -1,7 +1,7 @@
 import express from 'express'
-import path from 'path'
 import webpackMidlleware from './middlewares/webpack'
 import renderMiddleware from './middlewares/renderHTML'
+import staticMiddleware from './middlewares/static'
 
 const app = express()
 const port = process.env.PORT ? process.env.PORT : 3000
@@ -9,9 +9,10 @@ const port = process.env.PORT ? process.env.PORT : 3000
  /* eslint-disable no-console */
 
 app.use(webpackMidlleware)
+app.use(staticMiddleware)
 app.use(renderMiddleware)
 
-app.use(express.static(path.resolve(__dirname, './../')))
+// app.use(express.static(path.resolve(__dirname, './../')))
 // app.get(/.*/, (req, res) =>
 //      res.sendFile(path.resolve('index.html')),
 // )

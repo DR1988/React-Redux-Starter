@@ -7,17 +7,17 @@ import { actions, selectCounter } from '../../redux/counter'
 import Counter from './../../components/Counter/Counter'
 
 class CounterContainer extends Component {
+  static propTypes = {
+    counter: PropTypes.object.isRequired,
+    reset: PropTypes.func.isRequired,
+    increment: PropTypes.func.isRequired,
+    incrementAsync: PropTypes.func.isRequired,
+  }
   constructor(props) {
     super(props)
     this.state = {
       open: true,
     }
-  }
-  static propTypes = {
-    counter: PropTypes.object,
-    reset: PropTypes.func,
-    increment: PropTypes.func,
-    incrementAsync: PropTypes.func,
   }
   componentDidMount() {
     console.log($('.btn')[0])
