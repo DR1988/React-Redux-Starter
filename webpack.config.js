@@ -20,6 +20,7 @@ export default (env) => {
 
   // console.log(cssBundle.extract(cssLoader))
   return {
+    mode: env.dev ? 'development' : 'production',
     resolve: {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx'],
@@ -68,11 +69,11 @@ export default (env) => {
       }),
       dev(new webpack.HotModuleReplacementPlugin()),
       dev(new webpack.NoEmitOnErrorsPlugin()),
-      prod(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-        },
-      })),
+      // prod(new webpack.optimize.UglifyJsPlugin({
+      //   compress: {
+      //     warnings: false,
+      //   },
+      // })),
     ].filter(Boolean),
   }
 }
