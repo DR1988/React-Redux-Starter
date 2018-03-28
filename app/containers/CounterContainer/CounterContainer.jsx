@@ -16,6 +16,13 @@ class CounterContainer extends Component {
   constructor(props) {
     super(props)
   }
+  async componentDidMount() {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users')
+    const d = await res.json()
+    console.log('d', d)
+    // .then(r => r.json())
+    // .then(d => console.log('d', d))
+  }
 
   incrementByOne = () => this.props.increment(1)
   incrementByOneAync = () => this.props.incrementAsync(1)
