@@ -69,11 +69,6 @@ export default (env) => {
       }),
       dev(new webpack.HotModuleReplacementPlugin()),
       dev(new webpack.NoEmitOnErrorsPlugin()),
-      // prod(new webpack.optimize.UglifyJsPlugin({
-      //   compress: {
-      //     warnings: false,
-      //   },
-      // })),
     ].filter(Boolean),
   }
 }

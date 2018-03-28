@@ -17,9 +17,9 @@ class CounterContainer extends Component {
     super(props)
   }
   async componentDidMount() {
-    const res = await fetch('https://jsonplaceholder.typicode.com/users')
-    const d = await res.json()
-    console.log('d', d)
+    // const res = await fetch('https://jsonplaceholder.typicode.com/users')
+    // const d = await res.json()
+    // console.log('d', d)
     // .then(r => r.json())
     // .then(d => console.log('d', d))
   }

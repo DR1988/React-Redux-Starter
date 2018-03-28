@@ -1,3 +1,27 @@
+.root{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.links{
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+
+    .link__item{
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.5rem;
+        color: black;
+    }
+    .link__item:visited{
+      color: black;
+    }
+    .link__item:hover{
+        color: gray;
+    }
+}
+
 .green {
     color: lime;
 }

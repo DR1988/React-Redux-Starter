@@ -1,15 +1,11 @@
 import React from 'react'
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route, Switch, NavLink } from 'react-router-dom'
 import s from './Main.scss'
 import Counter from './../../containers/CounterContainer'
+import Users from '../../containers/UsersContainer/UsersContainer'
 
-const About = () => <div className={s.green}>
-  {/* {fetch('https://api.github.com/gists')
-    .then(r => r.json())
-    .then(gists => console.log(gists))
-  }*/}
-
-  About
+const About = () => <div>
+  React Redux-saga boileplate with reacr-router
   </div>
 const Home = () => <div>
   Home
@@ -18,18 +14,43 @@ const NotFound = () => <div>Not Found</div>
 
 const Main = () =>
   <div className={s.root}>
-    <div>
-      <Link to="/" className={s.green}>Home</Link>
-      <Link to="/about" >About</Link>
-      <Link to="/counter">Counter</Link>
+    <div className={s.links} >
+      <NavLink
+        activeStyle={{ color: 'lightseagreen' }}
+        to="/"
+        className={s.link__item}
+        strict
+        exact
+      >Home</NavLink>
+      <NavLink
+        activeStyle={{ color: 'lightseagreen' }}
+        to="/about"
+        className={s.link__item}
+        strict
+        exact
+      >About</NavLink>
+      <NavLink
+        activeStyle={{ color: 'lightseagreen' }}
+        to="/counter"
+        className={s.link__item}
+        strict
+        exact
+      >Counter</NavLink>
+      <NavLink
+        activeStyle={{ color: 'lightseagreen' }}
+        to="/users"
+        className={s.link__item}
+        strict
+        exact
+      >Users</NavLink>
     </div>
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/counter" component={Counter} />
+      <Route path="/Users" component={Users} />
       <Route component={NotFound} />
     </Switch>
-
   </div>
 
 export default Main
