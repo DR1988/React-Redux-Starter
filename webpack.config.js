@@ -27,8 +27,6 @@ export default (env) => {
     entry: [
       'babel-polyfill',
       dev('webpack-hot-middleware/client'),
-      dev('bootstrap-loader'),
-      prod('bootstrap-loader/extractStyles'),
       path.join(__dirname, 'app/index.js'),
     ].filter(Boolean),
     output: {
@@ -67,10 +65,6 @@ export default (env) => {
             })]
           },
         },
-      }),
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
       }),
       dev(new webpack.HotModuleReplacementPlugin()),
       dev(new webpack.NoEmitOnErrorsPlugin()),

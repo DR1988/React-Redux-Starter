@@ -19,22 +19,12 @@ class CounterContainer extends Component {
       open: true,
     }
   }
-  componentDidMount() {
-    console.log($('.btn')[0])
-  }
+
   incrementByOne = () => this.props.increment(1)
   incrementByOneAync = () => this.props.incrementAsync(1)
-  open = () => {
-    $('span').click(() => console.log(111))
-    $('span').css('cursor', 'pointer')
-    // this.setState({
-    //   open: !this.state.open,
-    // })
-  }
   render() {
     return (<div>
       <Counter
-        open={this.open}
         counter={this.props.counter}
         incrementByOne={this.incrementByOne}
         incrementByOneAync={this.incrementByOneAync}

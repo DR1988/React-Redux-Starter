@@ -2,7 +2,7 @@ import express from 'express'
 import React from 'react'
 // import { Provider } from 'react-redux'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { StaticRouter as Router /* matchPath*/ } from 'react-router'
+import { StaticRouter as Router } from 'react-router'
 import App from './../../app/components/App/App'
 import { purgeCache } from './../utils/index'
 
