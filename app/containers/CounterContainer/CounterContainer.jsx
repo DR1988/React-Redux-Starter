@@ -15,9 +15,6 @@ class CounterContainer extends Component {
   }
   constructor(props) {
     super(props)
-    this.state = {
-      open: true,
-    }
   }
 
   incrementByOne = () => this.props.increment(1)
@@ -30,7 +27,6 @@ class CounterContainer extends Component {
         incrementByOneAync={this.incrementByOneAync}
         reset={this.props.reset}
       />
-      {this.state.open ? <span>Yeah!</span> : null}
     </div>
     )
   }

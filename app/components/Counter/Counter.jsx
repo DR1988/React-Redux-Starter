@@ -10,7 +10,6 @@ const Counter = props => {
       <p>Counts: {props.counter.value} </p>
       <button
         className={`btn btn-default ${s.white}`}
-        onClick={props.open}
       > Click</button>
       <button onClick={props.incrementByOne} >+</button>
       <button onClick={props.incrementByOneAync}>+Async</button>
@@ -28,7 +27,6 @@ Counter.propTypes = {
   incrementByOne: PropTypes.func.isRequired,
   incrementByOneAync: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  open: PropTypes.func.isRequired,
   value: PropTypes.number,
   counter: PropTypes.object, //eslint-disable-line react/forbid-prop-types
 }
