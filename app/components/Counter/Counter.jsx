@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import s from './Counter.scss'
 
 const Counter = props => {
-  console.log(props.counter)
   return (
     <div className={s.root}>
       <h1>Hello!</h1>
