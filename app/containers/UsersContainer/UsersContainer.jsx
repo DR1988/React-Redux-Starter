@@ -2,24 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
 import { actions, selectUsers } from '../../redux/users'
 import Users from '../../components/Users/Users'
-
-const MyMapComponent = withScriptjs(withGoogleMap((props) => {
-  const { isMarkerShown, geo } = props
-  return (
-    <GoogleMap
-      defaultZoom={3}
-      defaultCenter={{ lat: geo.lat, lng: geo.lng }}
-      center={{ lat: geo.lat, lng: geo.lng }}
-    >
-      {isMarkerShown && <Marker position={{ lat: geo.lat, lng: geo.lng }} />}
-    </GoogleMap>
-  )
-},
-))
+import config from '../../config/index'
+import MyMapComponent from '../../components/MyMapComponent'
 
 class UsersContainer extends Component {
   static propTypes = {
@@ -53,13 +40,12 @@ class UsersContainer extends Component {
         <MyMapComponent
           geo={this.state.geo}
           isMarkerShown
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1lTN_5jEqVYytcAVZ9qSI4aIX_ZM6a3E&v=3.exp&libraries=geometry,drawing,places"
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_API_TOKEN}&v=3.exp&libraries=geometry,drawing,places`}
           loadingElement={<div style={{ width: '400px', height: '400px' }} />}
           containerElement={<div style={{ width: '400px', height: '400px' }} />}
           mapElement={<div style={{ width: '400px', height: '400px' }} />}
         />
       </Users>)
-    // return <Users users={users} showAddress={this.showAddress} />
   }
 }
 
