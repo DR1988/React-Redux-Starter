@@ -9,6 +9,16 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
       defaultZoom={3}
       defaultCenter={{ lat: geo.lat, lng: geo.lng }}
       center={{ lat: geo.lat, lng: geo.lng }}
+      defaultOptions={{
+       // these following 7 options turn certain controls off see link below
+        streetViewControl: false,
+        scaleControl: false,
+        mapTypeControl: false,
+        panControl: false,
+        zoomControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+      }}
     >
       {isMarkerShown && <Marker position={{ lat: geo.lat, lng: geo.lng }} />}
     </GoogleMap>

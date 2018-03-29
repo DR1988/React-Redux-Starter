@@ -40,7 +40,7 @@ class UsersContainer extends Component {
         <MyMapComponent
           geo={this.state.geo}
           isMarkerShown
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_API_TOKEN}&v=3.exp&libraries=geometry,drawing,places`}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?${config.GOOGLE_API_TOKEN ? `key=${config.GOOGLE_API_TOKEN}` : ''}&v=3.exp&libraries=geometry,drawing,places`}
           loadingElement={<div style={{ width: '400px', height: '400px' }} />}
           containerElement={<div style={{ width: '400px', height: '400px' }} />}
           mapElement={<div style={{ width: '400px', height: '400px' }} />}
