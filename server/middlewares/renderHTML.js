@@ -3,8 +3,8 @@ import React from 'react'
 // import { Provider } from 'react-redux'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { StaticRouter as Router } from 'react-router'
-import App from './../../app/components/App/App'
-import { purgeCache } from './../utils/index'
+import App from '../../app/components/App/App'
+import { purgeCache } from '../utils/index'
 
 const router = express.Router()
 // const assetUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : '/'

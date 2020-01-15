@@ -13,9 +13,18 @@ export default (env) => {
 
   const cssLoader = [
     dev('style-loader'),
-    `css-loader?modules&importLoaders=1&localIdentName=${
-    env.dev ? '[name]__[local]' : '[hash:base64:5]'
-    }&minimize=${!!env.prod}&context=/`,
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1,
+        modules: {
+          localIdentName: '[path][name]__[local]--[hash:base64:5]',
+        },
+      },
+    },
+    // `css-loader?modules&importLoaders=1&localIdentName=${
+    // env.dev ? '[name]__[local]' : '[hash:base64:5]'
+    // }`,
     'sass-loader'].filter(Boolean)
 
   // console.log(cssBundle.extract(cssLoader))
@@ -23,12 +32,12 @@ export default (env) => {
     mode: env.dev ? 'development' : 'production',
     resolve: {
       modules: ['node_modules'],
-      extensions: ['.js', '.jsx'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', 'json'],
     },
     entry: [
-      'babel-polyfill',
+      // '@babel/polyfill',
       dev('webpack-hot-middleware/client'),
-      path.join(__dirname, 'app/index.js'),
+      path.join(__dirname, 'app/index.tsx'),
     ].filter(Boolean),
     output: {
       path: dist,
@@ -42,7 +51,7 @@ export default (env) => {
           test: /\.s?css$/,
           use: env.dev ? cssLoader : cssBundle.extract(cssLoader),
         }, {
-          test: /\.jsx?$/,
+          test: [/\.jsx?$/, /\.tsx?$/],
           exclude: /node_modules/,
           loaders: ['babel-loader'],
           include: path.join(__dirname, 'app'),

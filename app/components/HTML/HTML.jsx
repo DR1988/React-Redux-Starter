@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 /* eslint react/no-danger: 0 */
 const Html = ({ children, initialState = {}, /* scripts,*/ styles, inlineStyles }) => (
   <html lang="en">
@@ -27,13 +26,5 @@ const Html = ({ children, initialState = {}, /* scripts,*/ styles, inlineStyles 
     </body>
   </html>
 )
-
-Html.propTypes = {
-  children: PropTypes.node.isRequired,
-  inlineStyles: PropTypes.string.isRequired,
-  initialState: PropTypes.object, // eslint-disable-line
-  // scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
-  styles: PropTypes.arrayOf(PropTypes.string).isRequired,
-}
 
 export default Html
