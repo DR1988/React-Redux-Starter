@@ -6,23 +6,27 @@ export const types = createTypes([
   'RESET',
 ], 'COUNTER')
 
-const initialState = {
+interface InitialState {
+  value: 0
+  request: false
+}
+const initialState: InitialState = {
   value: 0,
   request: false,
 }
 
 export const actions = createActions(types)
-export const selectCounter = state => state.counter
+export const selectCounter = (state: {[key: string]: any}) => state.counter
 
 const reducer = handleActions({
-  [types.INCREMENT_ASYNC]: state => ({
+  [types.INCREMENT_ASYNC]: (state: InitialState) => ({
     ...state,
     request: true,
   }),
-  [types.INCREMENT]: (state, { payload }) => (
+  [types.INCREMENT]: ({ payload }: { payload: number}, state: InitialState, ) => (
     {
       value: state.value + payload,
-      request: false,
+      ...state
     }),
   [types.RESET]: () => initialState,
 }, initialState)

@@ -1,15 +1,19 @@
-const camelify = str => str
+import { Action } from 'redux'
+
+const camelify = (str: string) => str
   .split('_')
   .map((s, i) => (i !== 0 ? s[0] + s.slice(1).toLowerCase() : s.toLowerCase()))
   .join('')
 
-export const createTypes = (arr, namespace) =>
+type NonEmptyArray<T> = [T, ...T[]]
+
+export const createTypes = (arr: NonEmptyArray<string>, namespace: string): { [key: string]: string } =>
   arr.reduce((o, type) => ({
     ...o,
     [type]: `${namespace}_${type}`,
   }), {})
 
-export const createActions = types => Object.keys(types).reduce((o, key) => ({
+export const createActions = (types: Object) => Object.keys(types).reduce((o, key) => ({
   ...o,
   [camelify(key)]: payload => ({
     type: types[key],
@@ -17,7 +21,7 @@ export const createActions = types => Object.keys(types).reduce((o, key) => ({
   }),
 }), {})
 
-export const handleActions = (handlers, initialState) => (state = initialState, action) => {
+export const handleActions = (handlers: Object, initialState: Object) => (state = initialState, action: Action) => {
   const handler = handlers[action.type]
   if (typeof handler === 'function') return handler(state, action)
   return state

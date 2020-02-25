@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import configureStore from './redux/confStore'
 import rootSaga from './saga/rootsaga'
-import App from './components/App/App.tsx'
+import App from './components/App/App'
 
 const initialState = {}
 const store = configureStore(initialState)
