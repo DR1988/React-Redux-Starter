@@ -8,5 +8,5 @@ export function* incrementAsync(action) {
 }
 
 export function* incrementAsyncSaga() {
-  yield takeLatest(types.INCREMENT_ASYNC, incrementAsync)
+  yield takeLatest(types.incrementAsync, incrementAsync)
 }

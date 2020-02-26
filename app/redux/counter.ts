@@ -1,10 +1,17 @@
 import { createTypes, createActions, handleActions } from '../utils/reduxUtils'
 
-export const types = createTypes([
-  'INCREMENT',
-  'INCREMENT_ASYNC',
-  'RESET',
-], 'COUNTER')
+
+const counterTypes = ['increment', 'incrementAsync', 'reset'] as const
+// const counterTypes = ['INCREMENT', 'INCREMENT_ASYNC', 'RESET'] as const
+type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<
+  infer ElementType
+>
+  ? ElementType
+  : never
+
+type CounterTypes = ElementType<typeof counterTypes>
+
+export const types = createTypes<CounterTypes>(counterTypes.map(t => t), 'COUNTER')
 
 interface InitialState {
   value: 0
@@ -15,20 +22,24 @@ const initialState: InitialState = {
   request: false,
 }
 
+console.log(types)
 export const actions = createActions(types)
+console.log(actions)
+
 export const selectCounter = (state: {[key: string]: any}) => state.counter
 
-const reducer = handleActions({
-  [types.INCREMENT_ASYNC]: (state: InitialState) => ({
+type t = typeof actions
+const reducer = handleActions<t, InitialState>({
+  [types.incrementAsync]: (state: InitialState) => ({
     ...state,
     request: true,
   }),
-  [types.INCREMENT]: ({ payload }: { payload: number}, state: InitialState, ) => (
+  [types.increment]: ({ payload }: { payload: number}, state: InitialState, ) => (
     {
       value: state.value + payload,
       ...state
     }),
-  [types.RESET]: () => initialState,
+  [types.reset]: () => initialState,
 }, initialState)
 
 export default reducer
