@@ -21,7 +21,7 @@ class Main extends React.Component {
           <input type="text" />
           <input type="text" />
         </form>
-        <button onClick={this.props.increment}>+</button>
+        <button onClick={() => this.props.increment()}>+</button>
         <button onClick={this.props.decrement}>-</button>
       </div>
     )
@@ -34,16 +34,13 @@ const mapStateToProps = state => {
   }
 }
 
-/* const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     // dispatching plain actions
-    increment: (payload = 1) => dispatch({ type: 'COUNTER_INCREMENT' }),
+    increment: (payload = 1) => dispatch({ type: 'COUNTER_INCREMENT', payload }),
     decrement: (payload = 1) => dispatch({ type: 'COUNTER_DECREMENT' }),
     reset: () => dispatch({ type: 'reset' })
   }
-} */
-
-const mapDispatchToProps  = {
-  ...actions
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+
+export default connect(mapStateToProps, actions)(Main)

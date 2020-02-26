@@ -35,12 +35,12 @@ export const createActions = <T, U>(types: T): { [key in keyof T]: (arg: Partial
 
 export const handleActions = <T, U>(handlers: T, initialState: U) => {
   return (state = initialState, action: Action<keyof T>): U => {
-    console.log(handlers)
-    console.log('action.type', action)
+    // console.log(handlers)
+    // console.log('action.type', action)
     const handler = handlers[action.type]
-    console.log('state', state)
-    console.log('handler', handler)
-    console.log('handler invoke ', typeof handler === 'function' && handler(state, action))
+    // console.log('state', state)
+    // console.log('handler', handler)
+    // console.log('handler invoke ', typeof handler === 'function' && handler(state, action))
     if (typeof handler === 'function') return handler(state, action)
     return state
   }

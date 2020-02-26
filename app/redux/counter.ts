@@ -14,7 +14,7 @@ type CounterTypes = ElementType<typeof counterTypes>
 export const types = createTypes<CounterTypes>(counterTypes.map(t => t), 'COUNTER')
 
 interface State {
-  value: 0
+  value: number
   request: false
 }
 const initialState: State = {
@@ -31,16 +31,17 @@ console.log(actions)
 export const selectCounter = (state: { [key: string]: any }) => state.counter
 
 type t = typeof actions
+//@ts-ignore
 const reducer = handleActions<typeof actions, State>({
   [types.incrementAsync]: (state: Partial<State>) => ({
     ...state,
     request: true,
   }),
-  [types.increment]: (state: State, { payload }: { payload: number }) => {
+  [types.increment]: (state: State, { payload = 1 }: { payload: number }) => {
     console.log('payloadpayloadpayload', payload)
     console.log('statestatestate', state)
     return {
-      value: state.value + 1,
+      value: state.value + payload,
       ...state
     }
   },
@@ -52,5 +53,6 @@ const reducer = handleActions<typeof actions, State>({
   [types.reset]: () => initialState,
 }, initialState)
 
+console.log('reducer', reducer)
 export default reducer
 
