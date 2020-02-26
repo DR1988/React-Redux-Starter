@@ -1,7 +1,7 @@
 import { createTypes, createActions, handleActions } from '../utils/reduxUtils'
+import { Action } from 'redux'
 
-
-const counterTypes = ['incrementAsync', 'increment', 'decrement', 'reset'] as const
+const counterTypes = ['increment', 'incrementAsync', 'decrement', 'reset'] as const
 // const counterTypes = ['INCREMENT', 'INCREMENT_ASYNC', 'RESET'] as const
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<
   infer ElementType
@@ -13,46 +13,34 @@ type CounterTypes = ElementType<typeof counterTypes>
 
 export const types = createTypes<CounterTypes>(counterTypes.map(t => t), 'COUNTER')
 
-interface State {
+export type counterState = {
   value: number
-  request: false
+  request: boolean
 }
-const initialState: State = {
+const initialState: counterState = {
   value: 0,
   request: false,
 }
 
-console.log(types)
-type ts = typeof types
-
-export const actions = createActions<typeof types, State>(types)
-console.log(actions)
+export const actions = createActions<typeof types, counterState>(types)
 
 export const selectCounter = (state: { [key: string]: any }) => state.counter
 
-type t = typeof actions
-//@ts-ignore
-const reducer = handleActions<typeof actions, State>({
-  [types.incrementAsync]: (state: Partial<State>) => ({
+const reducer = handleActions/* <typeof actions, State> */({
+  [types.increment]: (state: counterState, { value = 1 }: Partial<counterState>) => ({
+    ...state,
+    value: state.value + value,
+  }),
+  [types.decrement]: (state: counterState, { payload = 1 }: { payload: number }) => ({
+    ...state,
+    value: state.value - 1,
+  }),
+  [types.incrementAsync]: (state: counterState) => ({
     ...state,
     request: true,
   }),
-  [types.increment]: (state: State, { payload = 1 }: { payload: number }) => {
-    console.log('payloadpayloadpayload', payload)
-    console.log('statestatestate', state)
-    return {
-      value: state.value + payload,
-      ...state
-    }
-  },
-  [types.decrement]: (state: State, { payload }: { payload: number }, ) => (
-    {
-      value: state.value - 1,
-      ...state
-    }),
   [types.reset]: () => initialState,
 }, initialState)
 
-console.log('reducer', reducer)
 export default reducer
 

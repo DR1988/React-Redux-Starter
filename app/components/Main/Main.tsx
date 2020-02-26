@@ -1,14 +1,33 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { connect, ConnectedProps, useDispatch  } from 'react-redux'
 
-import { actions } from '../../redux/counter'
+import { actions, counterState } from '../../redux/counter'
 
 import s from './Main.scss'
 
-class Main extends React.Component {
+// interface P extends typeof actions
 
+const mapStateToProps = (state: counterState) => ({
+  counter: state
+})
+
+const connector = connect(
+  mapStateToProps,
+  actions
+)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+//own props
+type Props = PropsFromRedux & {
+  color: string
+}
+class Main extends React.Component<Props, {}> {
+
+  // constructor(props){
+  //   super(props)
+  // }
   componentDidMount() {
-
+    console.log(this.props)
   }
 
   render() {
@@ -21,26 +40,11 @@ class Main extends React.Component {
           <input type="text" />
           <input type="text" />
         </form>
-        <button onClick={() => this.props.increment()}>+</button>
-        <button onClick={this.props.decrement}>-</button>
+        <button onClick={() => this.props.increment(1)}>+</button>
+        <button onClick={() => this.props.decrement(2)}>-</button>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    counter: state.counter
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    // dispatching plain actions
-    increment: (payload = 1) => dispatch({ type: 'COUNTER_INCREMENT', payload }),
-    decrement: (payload = 1) => dispatch({ type: 'COUNTER_DECREMENT' }),
-    reset: () => dispatch({ type: 'reset' })
-  }
-}
-
-export default connect(mapStateToProps, actions)(Main)
+export default connector(Main)

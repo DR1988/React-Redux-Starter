@@ -17,30 +17,37 @@ export const createTypes = <T extends string>(arr: T[], namespace: string) =>
     [type]: `${namespace.toUpperCase()}_${splitify(type).toUpperCase()}`,
   }), {} as { [key in T]: string })
 
-export const createActions = <T, U>(types: T): { [key in keyof T]: (arg: Partial<U>) => U } => Object.keys(types).reduce((o, key) => ({
+// export const createActions = <T, U>(types: T):
+//   { [key in keyof T]: (/* arg: U,  *//* payload: Partial<U> */payload: U[keyof U]) => U } => {
+//     const ob: { [key in keyof T]: (payload: U[keyof U]) => U } = {}
+//     for (const key in types) {
+//       if (types.hasOwnProperty(key)) {
+        
+//         const element = types[key];
+        
+//       }
+//     }
+//     return ob
+//   }
+  //  Object.keys(types).reduce((o, key) => ({
+  //   ...o,
+  //   [key]: payload => ({
+  //     type: types[key],
+  //     payload,
+  //   }),
+  // }), {})
+
+export const createActions = <T>(types: T): { [key in keyof T]: Function } => Object.keys(types).reduce((o, key) => ({
   ...o,
-  [key]: payload => ({
+  [camelify(key)]: payload => ({
     type: types[key],
     payload,
   }),
 }), {})
 
-// export const createActions = <T>(types: T): { [key in keyof T]: Function } => Object.keys(types).reduce((o, key) => ({
-//   ...o,
-//   [camelify(key)]: payload => ({
-//     type: types[key],
-//     payload,
-//   }),
-// }), {})
-
 export const handleActions = <T, U>(handlers: T, initialState: U) => {
   return (state = initialState, action: Action<keyof T>): U => {
-    // console.log(handlers)
-    // console.log('action.type', action)
     const handler = handlers[action.type]
-    // console.log('state', state)
-    // console.log('handler', handler)
-    // console.log('handler invoke ', typeof handler === 'function' && handler(state, action))
     if (typeof handler === 'function') return handler(state, action)
     return state
   }
