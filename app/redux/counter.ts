@@ -1,7 +1,7 @@
 import { createTypes, createActions, handleActions } from '../utils/reduxUtils'
 
 
-const counterTypes = ['increment', 'incrementAsync', 'reset'] as const
+const counterTypes = ['incrementAsync', 'increment', 'decrement', 'reset'] as const
 // const counterTypes = ['INCREMENT', 'INCREMENT_ASYNC', 'RESET'] as const
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<
   infer ElementType
@@ -13,30 +13,40 @@ type CounterTypes = ElementType<typeof counterTypes>
 
 export const types = createTypes<CounterTypes>(counterTypes.map(t => t), 'COUNTER')
 
-interface InitialState {
+interface State {
   value: 0
   request: false
 }
-const initialState: InitialState = {
+const initialState: State = {
   value: 0,
   request: false,
 }
 
 console.log(types)
-export const actions = createActions(types)
+type ts = typeof types
+
+export const actions = createActions<typeof types, State>(types)
 console.log(actions)
 
-export const selectCounter = (state: {[key: string]: any}) => state.counter
+export const selectCounter = (state: { [key: string]: any }) => state.counter
 
 type t = typeof actions
-const reducer = handleActions<t, InitialState>({
-  [types.incrementAsync]: (state: InitialState) => ({
+const reducer = handleActions<typeof actions, State>({
+  [types.incrementAsync]: (state: Partial<State>) => ({
     ...state,
     request: true,
   }),
-  [types.increment]: ({ payload }: { payload: number}, state: InitialState, ) => (
+  [types.increment]: (state: State, { payload }: { payload: number }) => {
+    console.log('payloadpayloadpayload', payload)
+    console.log('statestatestate', state)
+    return {
+      value: state.value + 1,
+      ...state
+    }
+  },
+  [types.decrement]: (state: State, { payload }: { payload: number }, ) => (
     {
-      value: state.value + payload,
+      value: state.value - 1,
       ...state
     }),
   [types.reset]: () => initialState,
