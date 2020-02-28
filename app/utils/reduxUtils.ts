@@ -58,7 +58,7 @@ export const createActionsB = <T, U>(types: T):
 
 export const handleActions = <T, U>(handlers: T, initialState: U) => {
   return (state = initialState, action: Action<keyof T>): U => {
-    console.log('action', action)
+    // console.log('action', action)
     const handler = handlers[action.type]
     if (typeof handler === 'function') return handler(state, action)
     return state

@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
-// import counter from './counter'
+import counter from './counter'
 // import users from './users'
 import { messageReducer } from './message'
 
  const rootReducer = combineReducers({
-  // counter,
+  counter,
   // users,
   messageReducer
 })
@@ -13,3 +13,4 @@ import { messageReducer } from './message'
 export type RootState = ReturnType<typeof rootReducer>
 
 export default rootReducer
+

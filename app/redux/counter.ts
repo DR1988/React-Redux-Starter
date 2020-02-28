@@ -31,11 +31,11 @@ const reducer = handleActions/* <typeof actions, State> */({
     ...state,
     value: state.value + value,
   }),
-  [types.decrement]: (state: counterState, { payload }: Partial<counterState>) => {
-    console.log('payload', payload)
+  [types.decrement]: (state: counterState, { value }: Partial<counterState>) => {
+    console.log('payload', value)
     return {
     ...state,
-      value: state.value - payload,
+      value: state.value - value,
   }},
   [types.incrementAsync]: (state: counterState) => ({
     ...state,

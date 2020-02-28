@@ -27,11 +27,11 @@ class Main extends React.Component<Props, {}> {
   //   super(props)
   // }
   componentDidMount() {
-    console.log(this.props)
+    // console.log(this.props)
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div className={s.root}>
         <div>{this.props.counter.value}</div>

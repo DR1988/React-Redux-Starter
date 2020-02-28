@@ -30,10 +30,10 @@ interface DeleteAllMessageAction {
   }
 }
 
+
 type ChatActionTypes = SendMessageAction |
-                       DeleteMessageAction |
-                       DeleteAllMessageAction |
-                       ReturnType<typeof actionCreator>
+  DeleteMessageAction |
+  DeleteAllMessageAction
 
 export function sendMessage(newMessage: Message): ChatActionTypes {
   return {
@@ -51,11 +51,42 @@ export function deleteMessage(timestamp: number): ChatActionTypes {
   }
 }
 
+type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never
+
+
+export function actionsCreator() {
+  return {
+    sendMessages: (newMessage: Message) => (
+      {
+        type: 'SEND_MESSAGE',
+        payload: newMessage
+      } as const
+    ),
+
+    deleteMessages: (timestamp: number) => (
+      {
+        type: 'DELETE_MESSAGE',
+        meta: {
+          timestamp
+        }
+      } as const)
+  }
+}
+
+
+let ob = {
+  ...actionsCreator()
+};
+type tt = typeof ob
+type ft = ReturnType<typeof actionsCreator>
+
+type ActionsTypes = ReturnType<InferValueTypes<ReturnType<typeof actionsCreator>>>
+
 const initialState: ChatState = {
   messages: []
 }
 
-export const messageReducer = (state = initialState, action: ChatActionTypes) => {
+export const messageReducer = (state = initialState, action: ActionsTypes): ChatState => {
   switch (action.type) {
     case 'SEND_MESSAGE':
       return {
@@ -69,3 +100,22 @@ export const messageReducer = (state = initialState, action: ChatActionTypes) =>
       return state
   }
 }
+
+function makeActionCreator<T extends string>(type: T, ...argNames: string[] ) {
+  return function<U>(...args: U[]) {
+    const action: {type:T, payload?: U } = { type }
+    argNames.forEach((arg, index) => {
+      console.log(argNames[index])
+      console.log('args[index]', args[index])
+      const argv = argNames[index]
+      const argU = args[index]
+      action[argv] = argU
+      console.log('action', action)
+    })
+    return action
+  }
+}
+const actioF = makeActionCreator/* <Message, string> */('SEND_MESSAGE', 'message')
+const deleteAction = actioF({text: 'some text', timestamp: 123})
+console.log(deleteAction)
+
