@@ -1,9 +1,15 @@
 import { combineReducers } from 'redux'
 
-import counter from './counter'
+// import counter from './counter'
 // import users from './users'
+import { messageReducer } from './message'
 
-export default combineReducers({
-  counter,
+ const rootReducer = combineReducers({
+  // counter,
   // users,
+  messageReducer
 })
+
+export type RootState = ReturnType<typeof rootReducer>
+
+export default rootReducer

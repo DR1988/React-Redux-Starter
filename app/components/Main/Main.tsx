@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect, ConnectedProps, useDispatch  } from 'react-redux'
 
-import { actions, counterState } from '../../redux/counter'
+import { actions, counterState, selectCounter } from '../../redux/counter'
 
 import s from './Main.scss'
 
 // interface P extends typeof actions
 
-const mapStateToProps = (state: counterState) => ({
-  counter: state
+const mapStateToProps = (state) => ({
+  counter: selectCounter(state)//.counter
 })
 
 const connector = connect(

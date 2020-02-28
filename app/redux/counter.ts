@@ -1,4 +1,4 @@
-import { createTypes, createActions, handleActions } from '../utils/reduxUtils'
+import { createTypes, createActions, handleActions, createActionsB } from '../utils/reduxUtils'
 import { Action } from 'redux'
 
 const counterTypes = ['increment', 'incrementAsync', 'decrement', 'reset'] as const
@@ -22,8 +22,8 @@ const initialState: counterState = {
   request: false,
 }
 
+type tt = keyof counterState
 export const actions = createActions<typeof types, counterState>(types)
-
 export const selectCounter = (state: { [key: string]: any }) => state.counter
 
 const reducer = handleActions/* <typeof actions, State> */({
@@ -31,10 +31,12 @@ const reducer = handleActions/* <typeof actions, State> */({
     ...state,
     value: state.value + value,
   }),
-  [types.decrement]: (state: counterState, { payload = 1 }: { payload: number }) => ({
+  [types.decrement]: (state: counterState, { payload }: Partial<counterState>) => {
+    console.log('payload', payload)
+    return {
     ...state,
-    value: state.value - 1,
-  }),
+      value: state.value - payload,
+  }},
   [types.incrementAsync]: (state: counterState) => ({
     ...state,
     request: true,
