@@ -69,21 +69,25 @@ export function actionsCreator() {
         meta: {
           timestamp
         }
+      } as const),
+    deleteLastMessages: () => (
+      {
+        type: 'DELETE_LAST_MESSAGE',
       } as const)
   }
 }
 
 
-let ob = {
+export const actionsObject = {
   ...actionsCreator()
 };
-type tt = typeof ob
+type tt = typeof actionsObject
 type ft = ReturnType<typeof actionsCreator>
 
 type ActionsTypes = ReturnType<InferValueTypes<ReturnType<typeof actionsCreator>>>
 
 const initialState: ChatState = {
-  messages: []
+  messages: [{ text: 'some text', timestamp: 1 }, { text: 'some anothe text', timestamp: 2 }]
 }
 
 export const messageReducer = (state = initialState, action: ActionsTypes): ChatState => {
@@ -96,26 +100,31 @@ export const messageReducer = (state = initialState, action: ActionsTypes): Chat
       return {
         messages: state.messages.filter(message => message.timestamp !== action.meta.timestamp)
       }
+    case 'DELETE_LAST_MESSAGE':
+      return {
+        messages: [...state.messages.slice(0, -1)]
+      }
     default:
       return state
   }
 }
 
-function makeActionCreator<T extends string>(type: T, ...argNames: string[] ) {
-  return function<U>(...args: U[]) {
-    const action: {type:T, payload?: U } = { type }
-    argNames.forEach((arg, index) => {
-      console.log(argNames[index])
-      console.log('args[index]', args[index])
-      const argv = argNames[index]
-      const argU = args[index]
-      action[argv] = argU
-      console.log('action', action)
-    })
-    return action
+/*
+  function makeActionCreator<T extends string>(type: T, ...argNames: string[]) {
+    return function <U>(...args: U[]) {
+      const action: { type: T, payload?: U } = { type }
+      argNames.forEach((arg, index) => {
+        console.log(argNames[index])
+        console.log('args[index]', args[index])
+        const argv = argNames[index]
+        const argU = args[index]
+        action[argv] = argU
+        console.log('action', action)
+      })
+      return action
+    }
   }
-}
-const actioF = makeActionCreator/* <Message, string> */('SEND_MESSAGE', 'message')
-const deleteAction = actioF({text: 'some text', timestamp: 123})
-console.log(deleteAction)
-
+  export const actioF = makeActionCreator('SEND_MESSAGE', 'message')
+  const deleteAction = actioF({ text: 'some text', timestamp: 123 })
+  console.log(deleteAction)
+*/

@@ -24,14 +24,14 @@ const initialState: counterState = {
 
 type tt = keyof counterState
 export const actions = createActions<typeof types, counterState>(types)
-export const selectCounter = (state: { [key: string]: any }) => state.counter
+// export const selectCounter = (state) => state.counter
 
 const reducer = handleActions/* <typeof actions, State> */({
   [types.increment]: (state: counterState, { value = 1 }: Partial<counterState>) => ({
     ...state,
     value: state.value + value,
   }),
-  [types.decrement]: (state: counterState, { value }: Partial<counterState>) => {
+  [types.decrement]: (state: counterState, { value = 1 }: Partial<counterState>) => {
     console.log('payload', value)
     return {
     ...state,
