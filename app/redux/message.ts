@@ -1,60 +1,16 @@
-export interface Message {
+interface Message {
   // user: string
   text: string
   timestamp: number
 }
 
-export interface ChatState {
+interface ChatState {
   messages: Message[]
-}
-
-export const SEND_MESSAGE = 'SEND_MESSAGE'
-export const DELETE_MESSAGE = 'DELETE_MESSAGE'
-export const DELETE_ALL_MESSAGES = 'DELETE_ALL_MESSAGES'
-
-interface SendMessageAction {
-  type: typeof SEND_MESSAGE
-  payload: Message
-}
-
-interface DeleteMessageAction {
-  type: typeof DELETE_MESSAGE
-  meta: {
-    timestamp: number
-  }
-}
-interface DeleteAllMessageAction {
-  type: typeof DELETE_ALL_MESSAGES
-  meta: {
-    timestamp: number
-  }
-}
-
-
-type ChatActionTypes = SendMessageAction |
-  DeleteMessageAction |
-  DeleteAllMessageAction
-
-export function sendMessage(newMessage: Message): ChatActionTypes {
-  return {
-    type: SEND_MESSAGE,
-    payload: newMessage
-  }
-}
-
-export function deleteMessage(timestamp: number): ChatActionTypes {
-  return {
-    type: DELETE_MESSAGE,
-    meta: {
-      timestamp
-    }
-  }
 }
 
 type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never
 
-
-export function actionsCreator() {
+function actionsCreator() {
   return {
     sendMessages: (newMessage: Message) => (
       {
@@ -77,12 +33,9 @@ export function actionsCreator() {
   }
 }
 
-
 export const actionsObject = {
   ...actionsCreator()
 };
-type tt = typeof actionsObject
-type ft = ReturnType<typeof actionsCreator>
 
 type ActionsTypes = ReturnType<InferValueTypes<ReturnType<typeof actionsCreator>>>
 
@@ -90,7 +43,7 @@ const initialState: ChatState = {
   messages: [{ text: 'some text', timestamp: 1 }, { text: 'some anothe text', timestamp: 2 }]
 }
 
-export const messageReducer = (state = initialState, action: ActionsTypes): ChatState => {
+const messageReducer = (state = initialState, action: ActionsTypes): ChatState => {
   switch (action.type) {
     case 'SEND_MESSAGE':
       return {
@@ -109,6 +62,8 @@ export const messageReducer = (state = initialState, action: ActionsTypes): Chat
   }
 }
 
+export const getMessages = (state: ChatState) => state.messages
+export default messageReducer
 /*
   function makeActionCreator<T extends string>(type: T, ...argNames: string[]) {
     return function <U>(...args: U[]) {

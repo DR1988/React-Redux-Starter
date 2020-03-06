@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect, ConnectedProps, useDispatch } from 'react-redux'
 
-import { actions, counterState } from '../../redux/counter'
-import { sendMessage, deleteMessage, actionsObject } from '../../redux/message'
-import { RootState, selectCounter } from '../../redux/rootReducer'
+import { actions } from '../../redux/counter'
+import { actionsObject } from '../../redux/message'
+import { RootState, selectCounter, selectMessages } from '../../redux/rootReducer'
 
 import s from './Main.scss'
 
@@ -13,7 +13,7 @@ const mapStateToProps = (state: RootState) => {
   console.log('state', state)
   return {
     counter: selectCounter(state),//.counter
-    messages: state.messages.messages,
+    messages: selectMessages(state),
   }
 }
 
@@ -41,7 +41,7 @@ class Main extends React.Component<Props, {}> {
     return (
       <div className={s.root}>
         <div>{this.props.counter.value }</div>
-        {this.props.messages.map((message) => <div>{message.text}</div>)}
+        {this.props.messages.map((message) => <div key={message.timestamp}>{message.text}</div>)}
         <form action="">
           <input type="text" />
           <input type="text" />
